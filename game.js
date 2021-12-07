@@ -83,12 +83,12 @@ function thegame() {
         }
     })
 
-    testreset.addEventListener('click', function(){
+    testreset.addEventListener('click', function () {
         location.reload()
     })
 }
 
-function testselect () {
+function testselect() {
     const div = document.createElement('div')
     const label = document.createElement('label')
     const select = document.createElement('select')
@@ -97,17 +97,19 @@ function testselect () {
     const feuille = document.createElement('option')
     const btn = document.createElement('button')
 
-    div.className = 'row'
+    div.className = 'container'
     label.setAttribute('for', 'shifumi')
     select.name = 'janken'
     select.id = 'shifumi'
     select.className = 'mx-auto'
+
     ciseaux.value = 'ciseaux'
     ciseaux.innerText = 'Ciseaux'
     pierre.value = 'pierre'
     pierre.innerText = 'Pierre'
     feuille.value = 'feuille'
     feuille.innerText = 'Feuille'
+
     btn.innerText = 'Envoyer'
 
     game.appendChild(div)
@@ -119,50 +121,77 @@ function testselect () {
     div.appendChild(btn)
 
     let x = Math.floor(Math.random() * 3)
-    let y = document.getElementById('shifumi').value
-    let z = ''
 
-    console.log(y);
+    btn.addEventListener('click', function () {
+        let imgwin = document.createElement('img')
+        let imglose = document.createElement('img')
+        let imgdraw = document.createElement('img')
+        const y = select.value
+        let z = 0
+        console.log(y);
 
-    btn.addEventListener('click', function() {
-        if (x === 0) {
-            z = 'pierre'
-            if (y === 'ciseaux') {
-                alert(`J'ai fais pierre dommage !`)
-                location.reload()
-            } else if (y === 'feuille') {
-                alert('Purée, trop fort !')
-                location.reload()
-            } else if (y === 'pierre') {
-                alert (`Argh, égalité`)
-                location.reload()
-            } 
-        }
-        if (x === 1) {
-            z = 'feuille'
-            if (y === 'ciseaux') {
-                alert(`Argh, tu m'as cisaillé`)
-                location.reload()
-            } else if (y === 'pierre') {
-                alert (`Haha, sale noob`)
-                location.reload()
-            } else if (y === 'feuille') {
-                alert('Tsk, égalité')
-                location.reload()
-            }
-        }
-        if (x === 2) {
-            z = 'ciseaux'
-             if (y === 'pierre') {
-                alert (`Nyooooooon t'as triché !`)
-                location.reload()
-            } else if (y === 'feuille') {
-                alert(`T'as perdu, je suis le cisailleur masqué !`)
-                location.reload()
-            } else if (y === 'ciseaux') {
-                alert(`Sisi le 69, c'est égalité frer`)
-                location.reload()
-            }
+        imgwin.width = '512'
+        imgwin.height = '512'
+        imgwin.src = 'win.png'
+        imglose.width = '512'
+        imglose.height = '512'
+        imglose.src = 'lose.png'
+        imgdraw.width = '512'
+        imgdraw.height = '512'
+        imgdraw.src = 'draw.png'
+
+        // 0 = Pierre
+        // 1 = Ciseaux
+        // 2 = Feuille
+        switch (y) {
+            case 'ciseaux':
+                if (x === 0) {
+                    z = document.createTextNode(`J'ai fais pierre dommage !`)
+                    div.appendChild(z)
+                    div.appendChild(imglose)
+                } else if (x === 1) {
+                    z = document.createTextNode(`Argh, égalité`)
+                    div.appendChild(z)
+                    div.appendChild(imgdraw)
+                } else if (x === 2) {
+                    z = document.createTextNode('Purée, tu es trop fort !')
+                    div.appendChild(z)
+                    div.appendChild(imgwin)
+                }
+                break;
+            case 'pierre':
+                if (x === 0) {
+                    z = document.createTextNode(`Egalité boy !`)
+                    div.appendChild(z)
+                    div.appendChild(imgdraw)
+                } else if (x === 1) {
+                    z = document.createTextNode(`Tu m'as détruis bravo !`)
+                    div.appendChild(z)
+                    div.appendChild(imgwin)
+                } else if (x === 2) {
+                    z = document.createTextNode('La feuille bouffe la pierre, perdu dsl')
+                    div.appendChild(z)
+                    div.appendChild(imglose)
+                }
+                break;
+            case 'feuille':
+                if (x === 0) {
+                    z = document.createTextNode(`Tu m'as bouffé gg`)
+                    div.appendChild(z)
+                    div.appendChild(imgwin)
+                    location.reload()
+                } else if (x === 1) {
+                    z = document.createTextNode(`T'as perdu, je suis le cisailleur masqué !`)
+                    div.appendChild(z)
+                    div.appendChild(imglose)
+                    location.reload()
+                } else if (x === 2) {
+                    z = document.createTextNode(`Sisi le 69, c'est égalité frer`)
+                    div.appendChild(z)
+                    div.appendChild(imgdraw)
+                    location.reload()
+                }
+                break;
         }
     })
 }
